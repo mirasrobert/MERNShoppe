@@ -1,0 +1,38 @@
+{
+  "name": "mernshoppe",
+  "version": "1.0.0",
+  "description": "ecommerce site built in MERN Stack",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirasrobert/MERNShoppe.git"
+  },
+  "author": "Robert Miras",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mirasrobert/MERNShoppe/issues"
+  },
+  "homepage": "https://github.com/mirasrobert/MERNShoppe#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "express-validator": "^6.12.1",
+    "mongoose": "^6.1.8",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1"
+  }
+}
