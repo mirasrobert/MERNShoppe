@@ -9,24 +9,31 @@ export const cartReducer = (state = defaultState, action) => {
 
   switch (type) {
     case CART_ADD_ITEM:
-      const item = payload;
-
-      const existItem = state.cartItems.find((x) => x.product === item.product);
+      const existItem = state.cartItems.find(
+        (x) => x.product === payload.product
+      );
 
       if (existItem) {
         // if the current iteration item is equal to existing item then return
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
-            x.product === existItem.product ? item : x
+            x.product === existItem.product ? payload : x
           ),
         };
       } else {
         return {
           ...state,
-          cartItems: [...state.cartItems, item],
+          cartItems: [...state.cartItems, payload],
         };
       }
+
+    case CART_REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.product != payload),
+      };
+
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import AlertMessage from '../components/ui/AlertMessage';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ import {
   Card,
 } from 'react-bootstrap';
 
-const CartScreen = ({ match, location }) => {
+const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
 
   const qty = location.search ? parseInt(location.search.split('=')[1]) : 1;
@@ -32,7 +32,11 @@ const CartScreen = ({ match, location }) => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log(id);
+    dispatch(removeFromCart(id));
+  };
+
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping');
   };
 
   return (
@@ -52,16 +56,19 @@ const CartScreen = ({ match, location }) => {
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link
+                      className='no-underline'
+                      to={`/product/${item.product}`}>
+                      {item.name}
+                    </Link>
                   </Col>
                   <Col md={2}>$ {item.price}</Col>
                   <Col md={2}>
                     <FormControl
                       type='number'
-                      placeholder='1'
                       min='1'
                       max={item.countInStock}
-                      value={qty}
+                      value={item.qty}
                       onChange={(e) =>
                         dispatch(
                           addToCart(item.product, parseInt(e.target.value))
@@ -75,7 +82,7 @@ const CartScreen = ({ match, location }) => {
                       type='button'
                       variant='light'
                       onClick={() => removeFromCartHandler(item.product)}>
-                      <i className='fas fa-trash'></i>
+                      <i className='fas fa-trash text-danger'></i>
                     </Button>
                   </Col>
                 </Row>
@@ -84,8 +91,31 @@ const CartScreen = ({ match, location }) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={2}></Col>
-      <Col md={2}></Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant='flush'>
+            <ListGroup.Item>
+              <h2>
+                Subtotal ({cartItems.reduce((prev, item) => prev + item.qty, 0)}
+                ) items
+              </h2>
+              ${' '}
+              {cartItems
+                .reduce((prev, item) => prev + item.qty * item.price, 0)
+                .toFixed(2)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button
+                type='button'
+                className='btn-block'
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}>
+                Proceed To Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
     </Row>
   );
 };
