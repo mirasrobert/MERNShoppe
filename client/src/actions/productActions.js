@@ -8,8 +8,6 @@ import {
   PRODUCT_DETAILS_FAIL,
 } from '../constants/reducerConstants';
 
-const HTTP_DOMAIN = 'http://localhost:5000';
-
 // @desc Get the list of Products
 export const listProducts = () => async (dispatch) => {
   try {
@@ -17,7 +15,7 @@ export const listProducts = () => async (dispatch) => {
       type: PRODUCT_LIST_REQUEST,
     });
 
-    const { data } = await axios.get(`${HTTP_DOMAIN}/api/products`);
+    const { data } = await axios.get(`/api/products`);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -40,7 +38,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`${HTTP_DOMAIN}/api/products/${id}`);
+    const { data } = await axios.get(`/api/products/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,

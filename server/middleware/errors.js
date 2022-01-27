@@ -7,13 +7,11 @@ const notFound = (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   // sometimes we have an error even the status is 200
   // if that happens, we want to send a 500 status and the message (only if dev)
-  const error = req.statusCode === 200 ? 500 : res.statusCode;
-  res.status(error);
-
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode);
   res.json({
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };
-
 export { notFound, errorHandler };
