@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { notFound, errorHandler } from './middleware/errors.js';
 import colors from 'colors'; // Make our console have colors
+import passport from 'passport';
+import passportConfig from './middleware/passport-jwt.js';
 
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -15,6 +17,12 @@ app.use(cors());
 dotenv.config(); // Use .env
 
 connectDB(); // Connect to Database
+
+// Pass the global passport object into the configuration function
+passportConfig(passport);
+
+// This will initialize the passport object on every request
+app.use(passport.initialize());
 
 app.use(express.json());
 

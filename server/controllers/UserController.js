@@ -37,8 +37,16 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-const registerUser = asyncHandler(async (req, res) => {
-  res.send('register');
+/*
+ * @desc    Get user profile
+ * @route   GET /api/users/profile
+ * @access  Private
+ */
+
+const getUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).select('-password'); // Return user without password
+
+  res.json(user);
 });
 
-export { authUser, registerUser };
+export { authUser, getUserProfile };
