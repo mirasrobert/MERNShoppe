@@ -6,6 +6,7 @@ import { notFound, errorHandler } from './middleware/errors.js';
 import colors from 'colors'; // Make our console have colors
 
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -15,12 +16,15 @@ dotenv.config(); // Use .env
 
 connectDB(); // Connect to Database
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Server Running');
 });
 
 // Define API Routes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // Error handling
 app.use(notFound);

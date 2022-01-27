@@ -1,6 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { getProducts, getProductById } from '../controllers/products.js';
+import {
+  getProducts,
+  getProductById,
+} from '../controllers/ProductController.js';
 
 router.route('/').get(getProducts);
 

@@ -42,12 +42,6 @@ export const productListReducer = (state = productListDefault, action) => {
   }
 };
 
-const productDetailsDefault = {
-  product: {
-    reviews: [],
-  },
-};
-
 export const productDetailsReducer = (
   state = { product: { reviews: [] } },
   action
